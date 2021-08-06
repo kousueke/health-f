@@ -37,7 +37,7 @@ export default { //輸出
 
 .title{
   color: green;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
 }
 
@@ -52,8 +52,12 @@ export default { //輸出
 }
 
 .logout{
+  font-size: 12px;
   color: red;
   font-weight: bold;
   margin-right: 10%;
+  background-color: #f2f2f2;
+  padding: 15px;
+  border-radius: 5px;
 }
 </style>

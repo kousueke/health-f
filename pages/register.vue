@@ -11,7 +11,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -43,7 +42,7 @@ export default {
           };
           console.log(sendData);
           this.$axios.post("http://127.0.0.1:8000/api/v1/user", sendData);
-          //postメソッドに対応するphpユーザーコントローラーのアクションのstoreにsendDataが送られる
+          //postメソッドに対応するphpのユーザーコントローラーのアクションのstoreにsendDataが送られる
           this.$router.push("/login");
         })
         .catch((error) => {

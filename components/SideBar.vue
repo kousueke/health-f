@@ -16,15 +16,15 @@ export default {}
 
 <style scoped>
 .menu{
-  margin-top: 50px;
+  margin: 50px 20px 0;
 }
 
 .menu p {
-    padding: 10px 30px;
-    margin: 2em 0;
-    border-bottom: solid 5px green;
-    font-size: 18px;
+  max-width: 200px;
+  padding: 10px 30px;
+  margin: 2em 0;
+  border-bottom: solid 5px green;
+  font-size: 18px;
 }
 </style>
-
 
