@@ -37,32 +37,11 @@
           <tr v-for="item in foodLists" :key="item.id">
             <td><input type="name" v-model="item.name" /></td>
             <td><input type="name" v-model="item.protein" /></td>
+            <td><button @click="updateContact(item.id, item.name, item.protein)">更新</button></td>
+            <td><button @click="deleteContact(item.id)">削除</button></td>
             <td>
-              <button @click="updateContact(item.id, item.name, item.protein)">更新</button>
-            </td>
-            <td>
-              <button @click="deleteContact(item.id)">削除</button>
-            </td>
-            <td>
-              <!-- <input type="number" v-model:value="item.quantity"> -->
-              <!-- <span><input type="number" v-model:value="item.quantity" min="0" max="10"></span> -->
-
-              <span><input type="number" v-model="item.quantity" min="0" max="10"></span>
+              <span><input type="number" v-model="item.quantity" min="0" max="10" placeholder="0"></span>
               <span>{{ item.protein * item.quantity }}g</span>
-
-              <!-- <select name="num" id="num">
-                <option value="zero">0</option>
-                <option value="one">1</option>
-                <option value="two">2</option>
-                <option value="three">3</option>
-                <option value="four">4</option>
-                <option value="five">5</option>
-                <option value="six">6</option>
-                <option value="seven">7</option>
-                <option value="eight">8</option>
-                <option value="nine">9</option>
-                <option value="ten">10</option>
-              </select> -->
             </td>
           </tr>
           <div>合計値：{{ totalProtein }}g</div>
@@ -136,6 +115,19 @@ export default {
      }, 0) //sumの初期値を0とする
     },
   },
+
+      async totalProtein() {
+      firebase.auth().onAuthStateChanged(async(user) => {
+        const dailyAmont = {
+          amount: this.totalProtein,
+          user_id: user.uid,
+        };
+        this.uid = user.uid;
+        await this.$axios.post("http://127.0.0.1:8000/api/v1/daily/", dailyAmont);
+        this.getContact();
+      })
+      console.log(dailyAmount);
+    },
 
    created() {
     this.getContact();
