@@ -21,6 +21,10 @@
           <textarea name="protein" id="protein" cols="5" rows="1" v-model="newProtein"></textarea>
         </div>
         <div class="newfood">
+          <label for="amount">数量:</label>
+          <textarea name="amount" id="amount" cols="5" rows="1" v-model="newAmount"></textarea>
+        </div>
+        <div class="newfood">
           <button class="btn" @click="send">追加</button>
         </div>
       </div>
@@ -30,21 +34,18 @@
           <tr>
             <th>食品名</th>
             <th>タンパク質量</th>
+            <th>数量</th>
             <th>変更</th>
             <th>削除</th>
-            <th>数量</th>
           </tr>
           <tr v-for="item in foodLists" :key="item.id">
             <td><input type="name" v-model="item.name" /></td>
-            <td><input type="name" v-model="item.protein" /></td>
-            <td><button @click="updateContact(item.id, item.name, item.protein)">更新</button></td>
+            <td><input type="name" size="5" v-model="item.protein" />g</td>
+            <td><input type="name" size="5" v-model="item.amount" >個</td>
+            <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">更新</button></td>
             <td><button @click="deleteContact(item.id)">削除</button></td>
-            <td>
-              <span><input type="number" v-model="item.quantity" min="0" max="10" placeholder="0"></span>
-              <span>{{ item.protein * item.quantity }}g</span>
-            </td>
           </tr>
-          <div>合計値：{{ totalProtein }}g</div>
+          <!-- <div>合計値：{{ totalProtein }}g</div> -->
         </table>
 
       </div>
@@ -64,8 +65,8 @@ export default {
     return {
       newName: "",
       newProtein: "",
+      newAmount:"",
       uid:"",
-      quantity:"",
       foodLists: [],
     };
   },
@@ -83,6 +84,7 @@ export default {
         const sendData = {
           name: this.newName,
           protein: this.newProtein,
+          amount: this.newAmount,
           user_id: user.uid,
         };
         this.uid = user.uid;
@@ -90,10 +92,11 @@ export default {
         this.getContact();
       })
     },
-    async updateContact(id, name, protein) {
+    async updateContact(id, name, protein, amount) {
       const sendData = {
         name: name,
         protein: protein,
+        amount: amount,
       };
       await this.$axios.put(
         "http://127.0.0.1:8000/api/v1/food/" + id,
@@ -107,11 +110,15 @@ export default {
     },
   },
   
+
+
+
+
   computed: {
        // 合計値
        totalProtein: function() {
          return this.foodLists.reduce(function(sum, item) { //reduceメソッドとは、配列の要素を一つずつ取り出し、指定した処理を行っていき、最終的に一つの値を返す関数
-           return sum + (item.protein * item.quantity); //sumに足されていく
+           return sum + (item.protein * item.amount); //sumに足されていく
      }, 0) //sumの初期値を0とする
     },
   },
@@ -128,6 +135,14 @@ export default {
       })
       console.log(dailyAmount);
     },
+
+
+
+
+
+
+
+
 
    created() {
     this.getContact();
