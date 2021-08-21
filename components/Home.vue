@@ -4,25 +4,22 @@
 
     <div class="data">
         <th>{{ some_date | format-date }}</th>
-        <th>仮___22g/150g(目標値)</th>
-        
     </div>
 
     <div class="food-all">
 
-      <!-- <p>{{uid}}</p> -->
       <div class="new">
         <div class="newfood">
           <label for="name">食品名:</label>
-          <textarea name="name" id="name" cols="25" rows="1" v-model="newName"></textarea>
+          <input type="text" id="name" v-model="newName">
         </div>
         <div class="newfood">
-          <label for="protein">タンパク質量(g):</label>
-          <textarea name="protein" id="protein" cols="5" rows="1" v-model="newProtein"></textarea>
+          <label for="protein">タンパク質量：</label>
+          <input type="number" id="protein" min="1" max="100" v-model="newProtein">g
         </div>
         <div class="newfood">
-          <label for="amount">数量:</label>
-          <textarea name="amount" id="amount" cols="5" rows="1" v-model="newAmount"></textarea>
+          <label for="amount">数量：</label>
+          <input type="number" id="amount" min="1" max="20" v-model="newAmount">
         </div>
         <div class="newfood">
           <button class="btn" @click="send">追加</button>
@@ -30,6 +27,12 @@
       </div>
 
       <div class="food">
+          <div class="total_target">
+            <div class="target">目標値:{{this.myTarget[0]}}g</div>
+            <!-- <div class="target">目標値:{{this.myTarget[0].target}}g</div> -->
+            <!-- //連想配列0番目の「target」を表示 -->
+            <div class="total">現在の合計値：{{ totalProtein }}g</div>
+          </div>
         <table>
           <tr>
             <th>食品名</th>
@@ -38,16 +41,14 @@
             <th>変更</th>
             <th>削除</th>
           </tr>
-          <tr v-for="item in foodLists" :key="item.id">
+          <tr v-for="item in foodLists" :key="item.id" >
             <td><input type="name" v-model="item.name" /></td>
-            <td><input type="name" size="5" v-model="item.protein" />g</td>
-            <td><input type="name" size="5" v-model="item.amount" >個</td>
-            <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">更新</button></td>
+            <td><input type="number" min="1" max="100" v-model="item.protein" @change="onChange">g</td>
+            <td><input type="number" min="1" max="20" v-model="item.amount" @change="onChange">個</td>
+            <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">変更</button></td>
             <td><button @click="deleteContact(item.id)">削除</button></td>
           </tr>
-          <!-- <div>合計値：{{ totalProtein }}g</div> -->
         </table>
-
       </div>
 
     </div>
@@ -68,18 +69,48 @@ export default {
       newAmount:"",
       uid:"",
       foodLists: [],
+      myTarget:[],
     };
   },
   methods: {
-    async getContact() {
+    //getUserDataの処理の最後にgetContactの処理が動作する
+    getUserData() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          console.log(user);
+          this.uid = user.uid; //カレントユーザーを取得
+        }
+        this.getCourse();
+        this.getContact();
+      });
+    },
+    async getContact() { //getUserDataの処理の最後にgetCourseの処理が動く
+      const uid = this.uid //apiと一緒に送るuidを定義
+      console.log(uid)
       const resData = await this.$axios.get(
-        "http://127.0.0.1:8000/api/v1/food/"
+        "http://127.0.0.1:8000/api/v1/food/" + uid
       );
       console.log(resData);
       this.foodLists = resData.data.data;
+
+    },
+    async getCourse(){ //getUserDataの処理の最後にgetCourseの処理が動く
+      const uid = this.uid //apiと一緒に送るuidを定義
+      const myTarget = await this.$axios.get(
+        "http://127.0.0.1:8000/api/v1/course/" + uid
+      );
+      this.myTarget = myTarget.data.data;
+
+      console.log(uid);
+      console.log(myTarget);
+      console.log('aaa');
     },
 
     async send() {
+      if (!this.newName || !this.newProtein || !this.newAmount) {
+        alert("食品名またはタンパク質量または数量が入力されていません。");
+        return;
+      }
       firebase.auth().onAuthStateChanged(async(user) => {
         const sendData = {
           name: this.newName,
@@ -108,11 +139,12 @@ export default {
       await this.$axios.delete("http://127.0.0.1:8000/api/v1/food/" + id);
       this.getContact();
     },
+        onChange: function() {
+        console.log(this.totalProtein);
+        console.log('変更の処理')
+    }
   },
   
-
-
-
 
   computed: {
        // 合計値
@@ -125,27 +157,20 @@ export default {
 
       async totalProtein() {
       firebase.auth().onAuthStateChanged(async(user) => {
-        const dailyAmont = {
+        const dailyDay = {
           amount: this.totalProtein,
           user_id: user.uid,
         };
         this.uid = user.uid;
-        await this.$axios.post("http://127.0.0.1:8000/api/v1/daily/", dailyAmont);
+        await this.$axios.post("http://127.0.0.1:8000/api/v1/daily/", dailyDay);
         this.getContact();
       })
-      console.log(dailyAmount);
+      console.log(dailyDay);
     },
 
 
-
-
-
-
-
-
-
    created() {
-    this.getContact();
+    this.getUserData();
   },
 }
 </script>
@@ -153,7 +178,6 @@ export default {
 <style scoped>
 .home{
   margin: 50px 0 0 50px;
-  /* height: 100vh; */
 }
 .food-all{
   margin: 50px 0 0 50px;
@@ -163,7 +187,7 @@ export default {
 .new{
   display: flex;
   margin: 50px 0;
-  padding: 20px 0;
+  padding: 20px 10px 5px 10px;
   background-color: #f2f2f2;
   max-width: 700px;
   justify-content: center;
@@ -173,7 +197,6 @@ export default {
 .newfood{
   margin-right: 10px;
   font-size: 18px;
-  /* color: white; */
 }
 
 textarea {
@@ -201,4 +224,23 @@ th {
   background: #f2f2f2;
 }
 
+.total_target{
+  font-size: 20px;
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.total{
+  padding: 5px;
+  border-bottom: solid 5px green;
+  width: 200px;
+}
+
+.target{
+  padding: 5px;
+  border-bottom: solid 5px green;
+  width: 200px;
+}
 </style>
