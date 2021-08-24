@@ -5,8 +5,8 @@
     <div class="step">
       <ul>
         <ul>step① ご自身の体重を入力</ul><br>
-        <ul>step② コース選択</ul><br>
-        <ul>step③ 1日に摂取するプロテイン摂取量の目標値が表示されます</ul>
+        <ul>step② ご自身の目指す体型に合わせたコース選択</ul><br>
+        <ul>step③ 登録ボタンをクリックし登録を完了させましょう！</ul>
       </ul>
     </div>
     <div class="course">
