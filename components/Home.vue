@@ -4,6 +4,7 @@
 
     <div class="data">
         <th>{{ some_date | format-date }}</th>
+        <!-- getcontactみたいに各処理の後に動く処理を作成。その処理はカレントユーザーの登録してある食品のタンパク質量と数量をかけた合計値 -->
     </div>
 
     <div class="food-all">
@@ -28,10 +29,15 @@
 
       <div class="food">
           <div class="total_target">
-            <div class="target">目標値:{{this.myTarget[0]}}g</div>
-            <!-- <div class="target">目標値:{{this.myTarget[0].target}}g</div> -->
-            <!-- //連想配列0番目の「target」を表示 -->
-            <div class="total">現在の合計値：{{ totalProtein }}g</div>
+            <div class="target">
+              <ul v-for="item in myTarget" :key="item.id" >
+                <ul>目標値：<textarea name="" id="" cols="4" rows="1" v-model="item.target"></textarea>g</ul>
+              </ul>
+            </div>
+
+            <div class="total">
+              <ul>現在の合計値：{{ totalProtein }}g</ul>
+            </div>
           </div>
         <table>
           <tr>
@@ -43,8 +49,8 @@
           </tr>
           <tr v-for="item in foodLists" :key="item.id" >
             <td><input type="name" v-model="item.name" /></td>
-            <td><input type="number" min="1" max="100" v-model="item.protein" @change="onChange">g</td>
-            <td><input type="number" min="1" max="20" v-model="item.amount" @change="onChange">個</td>
+            <td><input type="number" min="1" max="100" v-model="item.protein">g</td>
+            <td><input type="number" min="1" max="20" v-model="item.amount">個</td>
             <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">変更</button></td>
             <td><button @click="deleteContact(item.id)">削除</button></td>
           </tr>
@@ -80,7 +86,7 @@ export default {
           console.log(user);
           this.uid = user.uid; //カレントユーザーを取得
         }
-        this.getCourse();
+        this.getCourse(); //カレントユーザーの目標値を表示
         this.getContact();
       });
     },
@@ -92,13 +98,13 @@ export default {
       );
       console.log(resData);
       this.foodLists = resData.data.data;
-
     },
     async getCourse(){ //getUserDataの処理の最後にgetCourseの処理が動く
       const uid = this.uid //apiと一緒に送るuidを定義
       const myTarget = await this.$axios.get(
         "http://127.0.0.1:8000/api/v1/course/" + uid
       );
+      // this.myTarget = myTarget.data.data[0];
       this.myTarget = myTarget.data.data;
 
       console.log(uid);
@@ -139,13 +145,7 @@ export default {
       await this.$axios.delete("http://127.0.0.1:8000/api/v1/food/" + id);
       this.getContact();
     },
-        onChange: function() {
-        console.log(this.totalProtein);
-        console.log('変更の処理')
-    }
   },
-  
-
   computed: {
        // 合計値
        totalProtein: function() {
@@ -155,38 +155,40 @@ export default {
     },
   },
 
-      async totalProtein() {
-      firebase.auth().onAuthStateChanged(async(user) => {
-        const dailyDay = {
-          amount: this.totalProtein,
-          user_id: user.uid,
-        };
-        this.uid = user.uid;
-        await this.$axios.post("http://127.0.0.1:8000/api/v1/daily/", dailyDay);
-        this.getContact();
-      })
-      console.log(dailyDay);
-    },
-
-
-   created() {
+  created() {
     this.getUserData();
   },
+
+  // beforeDestroy(id, name, protein, amount){
+  //     const sendData = {
+  //       name: name,
+  //       protein: protein,
+  //       amount: amount,
+  //     };
+  //      this.$axios.put(
+  //       "http://127.0.0.1:8000/api/v1/food/" + id,
+  //       sendData
+  //     );
+  //         this.postProtein();
+  //   console.log(postProtein);
+  //   console.log("z");
+  //   },
+
 }
 </script>
 
 <style scoped>
 .home{
-  margin: 50px 0 0 50px;
+  margin: 40px 0 0 40px;
 }
 .food-all{
-  margin: 50px 0 0 50px;
+  margin: 40px 0 0 40px;
   height: 100vh;
 }
 
 .new{
   display: flex;
-  margin: 50px 0;
+  margin: 40px 0;
   padding: 20px 10px 5px 10px;
   background-color: #f2f2f2;
   max-width: 700px;
@@ -206,6 +208,7 @@ textarea {
 
 .btn{
   padding: 1px 5px;
+  margin: -10px 0 0 0;
   font-size: 18px;
 }
 
@@ -232,15 +235,17 @@ th {
   width: 500px;
 }
 
-.total{
-  padding: 5px;
-  border-bottom: solid 5px green;
-  width: 200px;
-}
-
 .target{
   padding: 5px;
   border-bottom: solid 5px green;
   width: 200px;
 }
+
+.total{
+  padding: 20px 5px 0 5px;
+  border-bottom: solid 5px green;
+  width: 200px;
+}
+
+
 </style>
