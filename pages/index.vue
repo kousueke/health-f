@@ -12,8 +12,13 @@
 </div>
 </template>
 
+
+
 <script>
-export default {}
+//middlewareフォルダのauth.jsの処理の呼び出し
+export default {
+  middleware: "auth",
+  }
 </script>
 
 <style scoped>

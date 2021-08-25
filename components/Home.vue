@@ -34,7 +34,6 @@
                 <ul>目標値：<textarea name="" id="" cols="4" rows="1" v-model="item.target"></textarea>g</ul>
               </ul>
             </div>
-
             <div class="total">
               <ul>現在の合計値：{{ totalProtein }}g</ul>
             </div>
@@ -83,7 +82,7 @@ export default {
     getUserData() {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          console.log(user);
+          // console.log(user);
           this.uid = user.uid; //カレントユーザーを取得
         }
         this.getCourse(); //カレントユーザーの目標値を表示
@@ -92,11 +91,11 @@ export default {
     },
     async getContact() { //getUserDataの処理の最後にgetCourseの処理が動く
       const uid = this.uid //apiと一緒に送るuidを定義
-      console.log(uid)
+      // console.log(uid)
       const resData = await this.$axios.get(
         "http://127.0.0.1:8000/api/v1/food/" + uid
       );
-      console.log(resData);
+      // console.log(resData);
       this.foodLists = resData.data.data;
     },
     async getCourse(){ //getUserDataの処理の最後にgetCourseの処理が動く
@@ -107,9 +106,9 @@ export default {
       // this.myTarget = myTarget.data.data[0];
       this.myTarget = myTarget.data.data;
 
-      console.log(uid);
-      console.log(myTarget);
-      console.log('aaa');
+      // console.log(uid);
+      // console.log(myTarget);
+      // console.log('aaa');
     },
 
     async send() {
@@ -171,7 +170,7 @@ export default {
   //     );
   //         this.postProtein();
   //   console.log(postProtein);
-  //   console.log("z");
+  //   console.log("zzz");
   //   },
 
 }
