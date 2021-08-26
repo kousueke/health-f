@@ -90,8 +90,6 @@ export default {
       });
     },
     async getContact() { //getUserDataの処理の最後にgetCourseの処理が動く
-    https://health-in-b.herokuapp.com/
-
       const uid = this.uid //apiと一緒に送るuidを定義
       // console.log(uid)
       const resData = await this.$axios.get(
