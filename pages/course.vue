@@ -61,7 +61,7 @@ export default {
         };
         this.uid = user.uid;
         console.log(sendData);
-        await this.$axios.post("https://health-in-b.herokuapp.com//api/v1/course", sendData);
+        await this.$axios.post("https://health-in-b.herokuapp.com/api/v1/course", sendData);
         this.$router.push("/");
       })
     },
