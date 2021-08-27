@@ -93,7 +93,7 @@ export default {
       const uid = this.uid //apiと一緒に送るuidを定義
       // console.log(uid)
       const resData = await this.$axios.get(
-        "https://health-in-b.herokuapp.com/api/v1/food/" + uid
+        "https://health-in-b.herokuapp.com/api/v1/food" + uid
       );
       // console.log(resData);
       this.foodLists = resData.data.data;
@@ -101,7 +101,7 @@ export default {
     async getCourse(){ //getUserDataの処理の最後にgetCourseの処理が動く
       const uid = this.uid //apiと一緒に送るuidを定義
       const myTarget = await this.$axios.get(
-        "https://health-in-b.herokuapp.com/api/v1/course/" + uid
+        "https://health-in-b.herokuapp.com/api/v1/course" + uid
       );
       // this.myTarget = myTarget.data.data[0];
       this.myTarget = myTarget.data.data;
@@ -124,7 +124,7 @@ export default {
           user_id: user.uid,
         };
         this.uid = user.uid;
-        await this.$axios.post("https://health-in-b.herokuapp.com/api/v1/food/", sendData);
+        await this.$axios.post("https://health-in-b.herokuapp.com/api/v1/food", sendData);
         this.getContact();
       })
     },
@@ -135,13 +135,13 @@ export default {
         amount: amount,
       };
       await this.$axios.put(
-        "https://health-in-b.herokuapp.com/api/v1/food/" + id,
+        "https://health-in-b.herokuapp.com/api/v1/food" + id,
         sendData
       );
       this.getContact();
     },
     async deleteContact(id) {
-      await this.$axios.delete("https://health-in-b.herokuapp.com/api/v1/food/" + id);
+      await this.$axios.delete("https://health-in-b.herokuapp.com/api/v1/food" + id);
       this.getContact();
     },
   },
