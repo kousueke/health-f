@@ -124,7 +124,7 @@ export default {
           user_id: user.uid,
         };
         this.uid = user.uid;
-        await this.$axios.post("https://health-in-b.herokuapp.com/api/v1/food/", sendData);
+        await this.$axios.post("https://health-in-b.herokuapp.com/api/v1/food", sendData);
         this.getContact();
       })
     },
