@@ -37,6 +37,7 @@
 <script>
 import firebase from "~/plugins/firebase";
 export default {
+  middleware: "auth",
   data(){
   return {
     myCourse: '',
