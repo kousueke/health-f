@@ -47,15 +47,16 @@
             <th>削除</th> -->
           </tr>
           <tr v-for="item in foodLists" :key="item.id" >
+            <!-- <td><button @click="deleteContact(item.id)">削除</button></td> -->
+            <td><div class="flex icon-field" @click="deleteContact(item.id)"><img class="icon" src="../assets/delete.png" /></div></td>
             <td><input type="name" v-model="item.name" /></td>
             <td><input type="number" min="1" max="100" v-model="item.protein">g</td>
             <td><input type="number" min="1" max="20" v-model="item.amount">個</td>
-            <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">変更</button></td>
-            <td><button @click="deleteContact(item.id)">削除</button></td>
+            <!-- <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">変更</button></td> -->
+            <td><div class="flex icon-field" @click="updateContact(item.id, item.name, item.protein, item.amount)"><img class="icon" src="../assets/update.png" /></div></td>
           </tr>
         </table>
       </div>
-
     </div>
 
 
@@ -214,8 +215,9 @@ textarea {
 table,
 td,
 th {
-  border: 1px solid #000;
-  border-collapse: collapse;
+  /* border: 1px solid #000;
+  border-collapse: collapse; */
+  margin-top: 40px;  
   text-align: center;
 }
 td,
@@ -246,5 +248,11 @@ th {
   width: 200px;
 }
 
-
+.icon-field {
+  margin-top: 15px;
+  cursor: pointer;
+}
+.icon {
+  width: 20px;
+}
 </style>
