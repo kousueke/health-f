@@ -40,23 +40,20 @@
           </div>
         <table>
           <tr>
-            <div class="food_title">
             <th>食品名</th>
             <th>タンパク質量</th>
             <th>数量</th>
             <!-- <th>変更</th>
             <th>削除</th> -->
-            </div>
           </tr>
           <tr v-for="item in foodLists" :key="item.id" >
-            <!-- <td><button @click="deleteContact(item.id)">削除</button></td> -->
-            <div class="flex icon-field" @click="deleteContact(item.id)"><img class="icon" src="../assets/delete.png" /></div>
             <td><input type="name" v-model="item.name" /></td>
             <td><input type="number" min="1" max="100" v-model="item.protein">g</td>
             <td><input type="number" min="1" max="20" v-model="item.amount">個</td>
-            <!-- <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">変更</button></td> -->
-            <div class="flex icon-field" @click="updateContact(item.id, item.name, item.protein, item.amount)"><img class="icon" src="../assets/update.png" /></div>
-          </tr>
+            <!-- <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">変更</button></td>
+            <td><button @click="deleteContact(item.id)">削除</button></td> -->
+            <td><div class="flex icon-field" @click="updateContact(item.id, item.name, item.protein, item.amount)"><img class="icon" src="../assets/update.png" /></div></td></tr>
+            <td><div class="flex icon-field" @click="deleteContact(item.id)"><img class="icon" src="../assets/delete.png" /></div></td>
         </table>
       </div>
     </div>
@@ -219,8 +216,8 @@ td,
 th {
   /* border: 1px solid #000;
   border-collapse: collapse; */
-  margin-top: 40px;  
   text-align: center;
+  margin-top: 40px;
 }
 td,
 th {
@@ -228,10 +225,6 @@ th {
 }
 th {
   background: #f2f2f2;
-}
-
-.food_title{
-  margin-right: 20px;
 }
 
 .total_target{
