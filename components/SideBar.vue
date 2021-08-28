@@ -1,10 +1,10 @@
 <template>
 <div>
   <div class="menu">
-  <p @click="$router.push('/')">ユーザー情報</p>
   <p @click="$router.push('/')">week</p>
   <p @click="$router.push('/')">month</p>
   <p @click="$router.push('/')">year</p>
+  <p @click="$router.push('/')">ユーザー情報</p>
   <p @click="$router.push('/')">設定</p>
   </div>
 </div>

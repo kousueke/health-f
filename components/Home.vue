@@ -43,8 +43,8 @@
             <th>食品名</th>
             <th>タンパク質量</th>
             <th>数量</th>
-            <th>変更</th>
-            <th>削除</th>
+            <!-- <th>変更</th>
+            <th>削除</th> -->
           </tr>
           <tr v-for="item in foodLists" :key="item.id" >
             <td><input type="name" v-model="item.name" /></td>
