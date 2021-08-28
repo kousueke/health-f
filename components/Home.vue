@@ -52,8 +52,9 @@
             <td><input type="number" min="1" max="20" v-model="item.amount">個</td>
             <!-- <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">変更</button></td>
             <td><button @click="deleteContact(item.id)">削除</button></td> -->
-            <td><div class="flex icon-field" @click="updateContact(item.id, item.name, item.protein, item.amount)"><img class="icon" src="../assets/update.png" /></div></td></tr>
+            <td><div class="flex icon-field" @click="updateContact(item.id, item.name, item.protein, item.amount)"><img class="icon" src="../assets/update.png" /></div></td>
             <td><div class="flex icon-field" @click="deleteContact(item.id)"><img class="icon" src="../assets/delete.png" /></div></td>
+          </tr>
         </table>
       </div>
     </div>
