@@ -41,7 +41,8 @@ export default {
             name: this.name, //nameカラムは20行目のdataの中のname
           };
           console.log(sendData);
-          this.$axios.post("https://health-in-b.herokuapp.com/api/v1/user", sendData);
+          this.$axios.post("http://127.0.0.1:8000/api/v1/user", sendData);
+          // this.$axios.post("https://health-in-b.herokuapp.com/api/v1/user", sendData);
           //postメソッドに対応するphpのユーザーコントローラーのアクションのstoreにsendDataが送られる
           this.$router.push("/login");
         })
