@@ -90,6 +90,19 @@ export default {
         this.getContact();
       });
     },
+
+    async getCourse(){ //getUserDataの処理の最後にgetCourseの処理が動く
+      const uid = this.uid //apiと一緒に送るuidを定義
+      const myTarget = await this.$axios.get(
+        "http://127.0.0.1:8000/api/v1/course/" + uid
+        // "https://health-in-b.herokuapp.com/api/v1/course/" + uid
+      );
+      this.myTarget = myTarget.data.data;
+        if (this.myTarget.length === 0) {
+          this.$router.push('/course')
+        }
+    },
+
     async getContact() { //getUserDataの処理の最後にgetCourseの処理が動く
       const uid = this.uid //apiと一緒に送るuidを定義
       // console.log(uid)
@@ -99,19 +112,6 @@ export default {
       );
       // console.log(resData);
       this.foodLists = resData.data.data;
-    },
-    async getCourse(){ //getUserDataの処理の最後にgetCourseの処理が動く
-      const uid = this.uid //apiと一緒に送るuidを定義
-      const myTarget = await this.$axios.get(
-        "http://127.0.0.1:8000/api/v1/course/" + uid
-        // "https://health-in-b.herokuapp.com/api/v1/course/" + uid
-      );
-      // this.myTarget = myTarget.data.data[0];
-      this.myTarget = myTarget.data.data;
-
-      // console.log(uid);
-      // console.log(myTarget);
-      // console.log('aaa');
     },
 
     async send() {

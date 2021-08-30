@@ -17,7 +17,7 @@
 <script>
 //middlewareフォルダのauth.jsの処理の呼び出し
 export default {
-  middleware: "auth",
+  middleware: ["auth"]
   }
 </script>
 
