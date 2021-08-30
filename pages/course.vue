@@ -47,6 +47,28 @@ export default {
     };
   },
   methods: {
+    getUserData() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // console.log(user);
+          this.uid = user.uid; //カレントユーザーを取得
+        }
+        this.getCourse(); //カレントユーザーの目標値を表示
+      });
+    },
+
+    async getCourse(){ //getUserDataの処理の最後にgetCourseの処理が動く
+      const uid = this.uid //apiと一緒に送るuidを定義
+      const myTarget = await this.$axios.get(
+        "http://127.0.0.1:8000/api/v1/course/" + uid
+        // "https://health-in-b.herokuapp.com/api/v1/course/" + uid
+      );
+      this.myTarget = myTarget.data.data;
+        if (this.myTarget.length === 1) {
+          this.$router.push('/');
+        }
+    },
+
     async send() {
       //体重またはコースが偽の時
       if (!this.myCourse || !this.myWeight) {
@@ -72,8 +94,11 @@ export default {
     target: function(){
       return this.myCourse * this.myWeight;
     },
-  }
+  },
 
+  created() {
+    this.getUserData();
+  },
 }
 
 </script>
