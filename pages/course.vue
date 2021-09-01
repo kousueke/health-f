@@ -12,11 +12,11 @@
     <div class="course">
           <div class="aaa">
             <label for="name">体重：</label>
-            <input type="number" min="1" max="500" placeholder="1" v-model="myWeight">kg
+            <input class="form" type="number" min="1" max="500" placeholder="1" v-model="myWeight">kg
           </div>
           <div class="aaa">
             <label for="protein">コース選択：</label>
-              <select size="1" v-model="myCourse">
+              <select class="form" size="1" v-model="myCourse">
                   <option value="1.2">健康コース</option>
                   <option value="1.6">マッチョコース</option>
                   <option value="2">超マッチョコース</option>
@@ -141,5 +141,13 @@ export default {
 .btn{
   font-size: 18px;
   padding: 10px;
+}
+
+.aaa, input, form{
+  font-size: 18px;
+}
+
+.aaa, select, form{
+  font-size: 18px;
 }
 </style>
