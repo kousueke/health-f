@@ -59,5 +59,6 @@ export default { //輸出
   background-color: #f2f2f2;
   padding: 15px;
   border-radius: 5px;
+  cursor: pointer;
 }
 </style>
