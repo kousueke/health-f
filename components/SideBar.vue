@@ -4,7 +4,7 @@
   <p @click="$router.push('/')">week</p>
   <p @click="$router.push('/')">month</p>
   <p @click="$router.push('/')">year</p>
-  <p @click="$router.push('/')">ユーザー情報</p>
+  <p @click="$router.push('/user')">ユーザー情報</p>
   <p @click="$router.push('/')">設定</p>
   </div>
 </div>
@@ -25,6 +25,7 @@ export default {}
   margin: 2em 0;
   border-bottom: solid 5px green;
   font-size: 18px;
+  cursor: pointer;
 }
 </style>
 
