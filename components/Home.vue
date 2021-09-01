@@ -194,7 +194,7 @@ export default {
 .new{
   display: flex;
   margin: 40px 0;
-  padding: 20px 10px 5px 10px;
+  padding: 20px 0px 5px 10px;
   background-color: #f2f2f2;
   max-width: 700px;
   justify-content: center;
@@ -203,6 +203,10 @@ export default {
 
 .newfood{
   margin-right: 10px;
+  font-size: 18px;
+}
+
+.newfood, input, select{
   font-size: 18px;
 }
 
