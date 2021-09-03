@@ -43,15 +43,11 @@
             <th>食品名</th>
             <th>タンパク質量</th>
             <th>数量</th>
-            <!-- <th>変更</th>
-            <th>削除</th> -->
           </tr>
           <tr v-for="item in foodLists" :key="item.id" >
             <td><input type="name" v-model="item.name" /></td>
             <td><input type="number" min="1" max="100" v-model="item.protein">g</td>
             <td><input type="number" min="1" max="20" v-model="item.amount">個</td>
-            <!-- <td><button @click="updateContact(item.id, item.name, item.protein, item.amount)">変更</button></td>
-            <td><button @click="deleteContact(item.id)">削除</button></td> -->
             <td><div class="flex icon-field" @click="updateContact(item.id, item.name, item.protein, item.amount)"><img class="icon" src="../assets/update.png" /></div></td>
             <td><div class="flex icon-field" @click="deleteContact(item.id)"><img class="icon" src="../assets/delete.png" /></div></td>
           </tr>
