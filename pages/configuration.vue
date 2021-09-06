@@ -35,8 +35,8 @@ export default {
     async getUser(){
       const uid = this.uid //apiと一緒に送るuidを定義
       const myName = await this.$axios.get(
-        "http://127.0.0.1:8000/api/v1/user/" + uid
-        // "https://health-in-b.herokuapp.com/api/v1/user/" + uid
+        // "http://127.0.0.1:8000/api/v1/user/" + uid
+        "https://health-in-b.herokuapp.com/api/v1/user/" + uid
       );
       this.myName = myName.data.data;
       console.log(this.myName);
@@ -45,8 +45,8 @@ export default {
     async getCourse(){ //getUserDataの処理の最後にgetCourseの処理が動く
       const uid = this.uid //apiと一緒に送るuidを定義
       const myTarget = await this.$axios.get(
-        "http://127.0.0.1:8000/api/v1/course/" + uid
-        // "https://health-in-b.herokuapp.com/api/v1/course/" + uid
+        // "http://127.0.0.1:8000/api/v1/course/" + uid
+        "https://health-in-b.herokuapp.com/api/v1/course/" + uid
       );
       this.myTarget = myTarget.data.data;
       console.log(item.name);
